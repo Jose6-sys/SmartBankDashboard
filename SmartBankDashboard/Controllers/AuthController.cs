@@ -40,7 +40,17 @@ namespace SmartBankDashboard.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok("User registered successfully");
+            //  AUTO CREATE BANK ACCOUNT
+            var account = new Account
+            {
+                UserId = user.Id,
+                Balance = 0
+            };
+
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+
+            return Ok("User registered & bank account created");
         }
 
         // LOGIN
@@ -91,6 +101,4 @@ namespace SmartBankDashboard.Controllers
     }
 }
 
-/*using System.Security.Claims;
 
-int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));*/
